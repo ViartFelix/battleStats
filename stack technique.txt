@@ -1,3 +1,5 @@
 front: VueJS
+	Plugins: Iconify, Vuetify
 back: springboot
+	
 DB: postgreSQL

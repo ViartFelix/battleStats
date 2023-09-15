@@ -1,0 +1,47 @@
+[
+  //1ere forme:
+  {
+    name: (nome),
+    rarity: (rarity),
+    role: (role),
+
+    stats: {
+      target: [targets (nom)],
+      effects: [effects (nom)],
+      cost: (cost (ch2)),
+      dmg: (dmg),
+      level: (lvl),
+      hp: (hp)
+    }
+  },
+
+  //2eme forme
+  {
+    name: (nome),
+    rarity: (rarity),
+    role: (role),
+
+    stats: {
+      target: [targets (nom)],
+      effects: [effects (nom)],
+      cost: (cost (ch2)),
+      dmg: (dmg),
+      hp: (hp)
+    }
+  }
+
+  //3eme forme
+  {
+    name: (nome),
+    rarity: (rarity),
+    role: (role),
+
+    stats: {
+      target: [targets (nom)],
+      effects: [effects (nom)],
+      cost: (cost (ch2)),
+      dmg: (dmg),
+      hp: (hp)
+    }
+  }
+]
