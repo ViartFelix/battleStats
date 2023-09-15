@@ -1,4 +1,0 @@
-idée de projet:
-
-l'utilisateur vas mettre ses 15 slots de battle cats et un dash board avec les unitées les plus utilisées est affiché.
-Aussi, une section avec des slots pour des niveaux ou on peut voir les unitées.
