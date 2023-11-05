@@ -1,13 +1,22 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import BG from "@/components/common/BG.vue";
+</script>
 
 <template>
   <div class="main">
     <p>Hello ! :)</p>
   </div>
+
+  <BG
+    :visible="true"
+    :src="require('../assets/img_video_accueil.webp')"
+    type="img"
+  />
 </template>
 
 <style lang="scss" scoped>
 div.main {
-  height: 100vh;
+  position: relative;
+  min-height: 100vh;
 }
 </style>

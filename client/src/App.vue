@@ -38,4 +38,7 @@ export default defineComponent({
   font-size: 1rem;
   font-family: "Public Sans", sans-serif;
 }
+main {
+  background-color: #000;
+}
 </style>
