@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import BG from "@/components/common/BG.vue";
+import HomeLayout from "@/layouts/home/HomeLayout.vue";
 </script>
 
 <template>
   <div class="main">
-    <p>Hello ! :)</p>
+    <HomeLayout />
   </div>
 
   <BG
