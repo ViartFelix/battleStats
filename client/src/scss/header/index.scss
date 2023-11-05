@@ -1,0 +1,122 @@
+@import "../common.scss";
+@import "../vars.scss";
+
+header.header {
+  width: calc(100% - 20px);
+  color: $white;
+  position: sticky;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+  overflow: hidden;
+
+  div.header-wrapper {
+    width: 100%;
+    border-radius: 5px;
+    background-color: $black;
+    padding: 5px 15px;
+
+    div.header-contents {
+      width: 100%;
+      display: grid;
+      grid-template-columns: calc(75% / 2) 25% calc(75% / 2);
+      grid-template-rows: 50px;
+      align-items: center;
+      position: relative;
+
+      a {
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        cursor: pointer;
+        color: $white;
+      }
+
+      nav.header-site-links {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        * {
+          padding: 0 5px;
+        }
+
+        a.main-logo {
+          font-family: 'Quicksand', sans-serif;
+          font-weight: 700;
+          display: flex;
+        }
+
+        &>*:not(:first-child) {
+          margin: 0 5px;
+        }
+
+        span.dashboard-dropdown {
+          display: flex;
+          align-items: center;
+          user-select: none;
+          cursor: pointer;
+
+          .dashboard-dropdown-icon {
+            width: 25px;
+            height: 25px;
+          }
+        }
+
+        a.my-teams-link {
+
+        }
+      }
+
+      div.search-bar {
+        height: 100%;
+        padding: 7px;
+        width: 100%;
+
+        div.search-bar-wrapper {
+          width: 100%;
+        }
+      }
+
+      div.auth {
+        width: 100%;
+
+
+          a.profile-link {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            margin-right: 0;
+            direction: rtl;
+  
+            img.profile-img {
+              margin-left: 10px;
+              width: 32px;
+              height: 32px;
+              object-fit: cover;
+              object-position: center;
+              border-radius: 3px;
+            }
+        }
+
+        
+      }
+    }
+  }
+}
+
+.__v-list-container__ {
+  user-select: none;
+  cursor: pointer;
+
+  a {
+    color: $black;
+    text-decoration: none;
+  }
+}
+
+.v-input--density-default {
+  --v-input-control-height: 56px;
+  --v-input-padding-top: 5px;
+}
