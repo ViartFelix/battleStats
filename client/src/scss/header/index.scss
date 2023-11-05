@@ -4,7 +4,7 @@
 header.header {
   width: calc(100% - 20px);
   color: $white;
-  position: sticky;
+  position: fixed;
   top: 10px;
   left: 10px;
   z-index: 999;
