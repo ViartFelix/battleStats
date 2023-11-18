@@ -59,7 +59,7 @@ div.__BG {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 0;
 
   div.BG-wrapper {
     filter: blur(20px);
@@ -78,7 +78,7 @@ div.__BG {
     height: calc(100vh + 20px);
     top: -10px;
     left: -10px;
-    z-index: 101;
+    z-index: 1;
     background-color: rgba($color: $black, $alpha: 0.6);
   }
 }

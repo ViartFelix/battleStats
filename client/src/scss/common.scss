@@ -1,3 +1,17 @@
+
+html, body {
+  position: relative;
+}
+
+:root {
+  font-size: 16px !important;
+  font-family: 'Public sans';
+}
+
+body {
+  font-size: 1rem;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 
@@ -24,4 +38,6 @@ container.container {
   display: block;
   max-width: 1200px;
   margin: 0 auto;
+  z-index: 2;
+  position: relative;
 }

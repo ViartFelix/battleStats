@@ -7,8 +7,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    
+  <div class="home-cards">
+    <p>Card</p>
   </div>
 </template>
 
