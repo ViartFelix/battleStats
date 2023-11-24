@@ -4,5 +4,7 @@
     "**/db_manage": true,
     "**/figma": true,
     "**/other": true
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic"
 }
