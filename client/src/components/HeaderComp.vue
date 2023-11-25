@@ -68,10 +68,19 @@ export default defineComponent({
           </div>
         </div>
 
-        <div class="auth">
-          <RouterLink class="profile-link" to="/profile">
+        <div class="auth profile-container" v-if="false">
+          <RouterLink class="profile-link internal-link" to="/profile">
             <img class="profile-img" :src="require('@/assets/pp_test.jpg')" />
             My profile
+          </RouterLink>
+        </div>
+
+        <div class="unAuth profile-container">
+          <RouterLink class="register-link internal-link" to="/register">
+            Register
+          </RouterLink>
+          <RouterLink class="login-link internal-link" to="/login">
+            <v-btn type="flat" color="#F77F00">Login</v-btn>
           </RouterLink>
         </div>
       </div>
