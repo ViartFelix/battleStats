@@ -1,0 +1,11 @@
+@import "../common.scss";
+@import "../vars.scss";
+
+div.container {
+  margin-top: calc(60px + 20px);
+
+  .card-container {
+    margin: 0 auto;
+    
+  }
+}

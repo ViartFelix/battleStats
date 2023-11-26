@@ -13,10 +13,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <container class="container" role="div">
+  <div class="container">
     <mainScreen />
     <homeCards />
-  </container>
+  </div>
 </template>
 
 <style lang="scss" scoped>

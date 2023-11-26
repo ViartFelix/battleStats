@@ -3,6 +3,9 @@ import HomeView from "@/views/HomeView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import RegisterLoginView from "@/views/RegisterLogin.vue";
 
+import RegisterLayout from "@/layouts/registerLogin/Register.vue";
+import LoginLayout from "@/layouts/registerLogin/Login.vue";
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -16,9 +19,25 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/register",
-    alias: "/login",
-    name: "registerLogin",
+    name: "registerView",
     component: RegisterLoginView,
+    children: [
+      {
+        path: "",
+        component: RegisterLayout,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    name: "loginView",
+    component: RegisterLoginView,
+    children: [
+      {
+        path: "",
+        component: LoginLayout,
+      },
+    ],
   },
 ];
 
