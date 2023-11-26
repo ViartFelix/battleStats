@@ -27,8 +27,8 @@ public class UserController {
     try {
       User user_create=new User(usr);
 
-      if(usrRepo.findByName(usr).size() > 0 && usrRepo.findByEmail(email).size() > 0) {
-        throw new ProfileException("Account already exists, please set another username.");
+      if(usrRepo.findByUsername(usr).size() > 0 && usrRepo.findByEmail(email).size() > 0) {
+        throw new ProfileException("Email is already in use. Please enter another email.");
       } else {
         user_create.setUsername(usr);
         user_create.setEmail(email);

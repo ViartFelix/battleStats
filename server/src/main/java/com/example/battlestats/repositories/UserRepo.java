@@ -9,6 +9,6 @@ import com.example.battlestats.models.User;
 
 @Repository
 public interface UserRepo extends CrudRepository<User, Integer> {
-  public List<User> findByName(String name);
+  public List<User> findByUsername(String name);
   public List<User> findByEmail(String email);
 }
