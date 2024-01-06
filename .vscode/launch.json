@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BattleStatsApplication<battle-stats>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.battlestats.BattleStatsApplication",
+            "projectName": "battle-stats",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

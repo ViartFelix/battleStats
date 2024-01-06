@@ -23,9 +23,7 @@ public class User {
   private Date registered_at;
   private Date created_at;
 
-  public User( String username ) {
-    this.username=username;
-  }
+  public User() {}
 
   /* -------------- Actions -------------- */
 

@@ -1,5 +1,7 @@
 <script lang="ts">
 import { Icon } from "@iconify/vue";
+// eslint-disable-next-line
+import axios from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -64,10 +66,21 @@ export default defineComponent({
     submitHandler(): void {
       this.isAPIFetching = true;
 
-      setTimeout(() => {
-        this.isAPIFetching = false;
-        alert("sent !");
-      }, 3000);
+      axios
+        .post("http://localhost:8000/user/add", {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        })
+        .then((r: object) => {
+          console.log(r);
+        })
+        .catch((e: object) => {
+          console.log(e);
+        })
+        .finally(() => {
+          this.isAPIFetching = false;
+        });
     },
   },
 });
