@@ -2,14 +2,14 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "homeCards",
+	name: "homeCards",
 });
 </script>
 
 <template>
-  <div class="home-cards">
-    <p>Card</p>
-  </div>
+	<div class="home-cards">
+		<p>Card</p>
+	</div>
 </template>
 
 <style lang="scss" scoped>

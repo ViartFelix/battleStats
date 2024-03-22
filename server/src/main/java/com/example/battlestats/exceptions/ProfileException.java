@@ -19,8 +19,7 @@ public class ProfileException extends Exception {
     return this.errorString;
   }
 
-  public ResponseEntity<User> toString() {
+  public String toString() {
     return this.errorString;
   }
-
 }

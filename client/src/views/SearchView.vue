@@ -5,15 +5,14 @@ import { defineComponent } from "vue";
 import QueryRecite from "@/components/search/QueryRecite.vue";
 
 export default defineComponent({
-  name: "QueryTest",
+	name: "QueryTest",
 
-  components: {
-    QueryRecite,
-  },
+	components: {
+		QueryRecite,
+	},
 });
 </script>
 
-
 <template>
-  <QueryRecite />
+	<QueryRecite />
 </template>
