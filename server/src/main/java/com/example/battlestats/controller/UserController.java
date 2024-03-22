@@ -44,22 +44,17 @@ public class UserController {
             //Nouveau modèle
             User userCreate = new User();
 
-			String email = map.get("email").asText().trim();
-            if (!userRepo.findByEmail(email).isEmpty()) {
-                throw new ProfileException("User already exists");
+			String user = map.get("username").asText();
+            if (!userRepo.findByEmail(user).isEmpty()) {
+                throw new ProfileException("Username already exists.");
             }
 
             //Prise des infos de l'utilisateur
-            String user = map.get("username").asText();
-            String password = map.get("password").asText();
-
-            //Hashage en sha512 du password
-            String hashPwd = userCreate.hashPassword(password, userCreate.getSalt());
-
             //Mise dans le modèle
             userCreate.setUsername(user);
-            userCreate.setEmail(email);
-            userCreate.setPassword(hashPwd);
+            userCreate.setEmail(map.get("email").asText().trim());
+			//Hashage en sha512 du password
+            userCreate.setPassword(userCreate.hashPassword(map.get("password").asText(), userCreate.getSalt()));
 
             userCreate.setCreated_at(new Date());
             userCreate.setRegistered_at(new Date());
