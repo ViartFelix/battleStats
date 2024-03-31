@@ -1,5 +1,7 @@
 <script lang="ts">
+import profileStore from "@/store/profiles";
 import { Icon } from "@iconify/vue";
+import axios, { AxiosResponse } from "axios";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -35,9 +37,21 @@ export default defineComponent({
 		submitHandler(): void {
 			this.isAPIContacting = true;
 
-			setTimeout(() => {
-				this.isAPIContacting = false;
-			}, 3000);
+			axios
+				.post("http://localhost:8000/user/login", {
+					username: this.username,
+					password: this.password,
+				})
+				.then((r: AxiosResponse) => {
+					profileStore.commit("updateUser", r.data.user);
+					profileStore.commit("updateToken", r.data.token);
+				})
+				.catch((e) => {
+					console.log(e);
+				})
+				.finally(() => {
+					this.isAPIContacting = false;
+				});
 		},
 	},
 });
