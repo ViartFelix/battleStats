@@ -1,29 +1,23 @@
-package com.example.battlestats.Components;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import com.example.battlestats.models.User;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+package com.example.battlestats.helpers;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.internal.Function;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
-import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.security.PrivateKey;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
-public class JwtTokenUtils implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = -2550185165626007488L;
+public class JwtHelper {
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
@@ -44,6 +38,7 @@ public class JwtTokenUtils implements Serializable {
 		final Claims claims = getAllClaimsFromToken(token);
 		return claimsResolver.apply(claims);
 	}
+
 	//for retrieveing any information from token we will need the secret key
 	private Claims getAllClaimsFromToken(String token) {
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
@@ -56,7 +51,7 @@ public class JwtTokenUtils implements Serializable {
 	}
 
 	//generate token for user
-	public String generateToken(User userDetails) {
+	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
@@ -67,14 +62,24 @@ public class JwtTokenUtils implements Serializable {
 	//3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
 	//   compaction of the JWT to a URL-safe string
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
+
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
 			.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-			.signWith(SignatureAlgorithm.HS512, "hey".getBytes(StandardCharsets.UTF_8)).compact();
+			.signWith(this.getSecretKey(), SignatureAlgorithm.HS256).compact();
 	}
 
 	//validate token
-	public Boolean validateToken(String token, User userDetails) {
+	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
+
+	//getKey
+	private Key getSecretKey()
+	{
+		byte[] keyByes = this.secret.getBytes(StandardCharsets.UTF_8);
+		return Keys.hmacShaKeyFor(keyByes);
+	}
+
+
 }

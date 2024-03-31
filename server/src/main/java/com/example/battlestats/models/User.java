@@ -7,9 +7,14 @@ import java.security.SecureRandom;
 import java.util.Date;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +26,6 @@ public class User {
 	private String password;
 	private Date registered_at;
 	private Date created_at;
-
-	public User() {
-	}
 
 	/* -------------- Actions -------------- */
 
@@ -50,53 +52,5 @@ public class User {
 		byte[] salt = new byte[16];
 		random.nextBytes(salt);
 		return salt;
-	}
-
-	/* -------------- Getters -------------- */
-
-	public Integer getId() {
-		return id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public Date getRegistered_at() {
-		return registered_at;
-	}
-
-	public Date getCreated_at() {
-		return created_at;
-	}
-
-	/* -------------- Setters -------------- */
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setRegistered_at(Date registered_at) {
-		this.registered_at = registered_at;
-	}
-
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
 	}
 }

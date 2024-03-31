@@ -2,11 +2,7 @@ package com.example.battlestats.controller;
 
 import java.util.*;
 
-import com.example.battlestats.Components.JwtTokenUtils;
 import com.example.battlestats.exceptions.ProfileException;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/user")
 public class UserController {
 
+	/*
 	@Autowired
 	UserRepo userRepo;
 
@@ -128,4 +125,6 @@ public class UserController {
 			return new ResponseEntity(map, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	 */
 }
