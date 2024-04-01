@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.example.battlestats.models.User;
 
 @Repository
-public interface UserRepo extends CrudRepository<User, Integer> {
-  public List<User> findByUsername(String name);
-  public List<User> findByEmail(String email);
+public interface UserRepository extends CrudRepository<User, Integer> {
+	public User findByUsername(String name);
+	public User findByEmail(String email);
+	Boolean existsByUsername(String username);
+	Boolean existsByEmail(String email);
 }
