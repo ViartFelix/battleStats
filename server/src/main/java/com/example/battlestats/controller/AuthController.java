@@ -1,10 +1,12 @@
 package com.example.battlestats.controller;
 
-import com.example.battlestats.helpers.JwtHelper;
-import com.example.battlestats.repositories.UserRepository;
-import com.example.battlestats.services.JwtRequest;
-import com.example.battlestats.services.JwtResponse;
+import com.example.battlestats.dtos.LoginResponse;
+import com.example.battlestats.dtos.LoginUserDto;
+import com.example.battlestats.dtos.RegisterUserDto;
 import com.example.battlestats.models.User;
+import com.example.battlestats.repositories.UserRepository;
+import com.example.battlestats.services.AuthenticationService;
+import com.example.battlestats.services.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,78 +15,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-	@Autowired
-	private UserDetailsService userDetailsService;
+	private final JwtService jwtService;
 
-	@Autowired
-	private AuthenticationManager manager;
+	private final AuthenticationService authenticationService;
 
-	@Autowired
-	private JwtHelper helper;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	private Logger logger = LoggerFactory.getLogger(AuthController.class);
-
-
-	@PostMapping("/login")
-	public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
-		this.doAuthenticate(request.getUsername(), request.getPassword());
-
-		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-		String token = this.helper.generateToken(userDetails);
-
-		JwtResponse response = JwtResponse.builder()
-			.jwtToken(token)
-			.username(userDetails.getUsername()).build();
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	public AuthController(JwtService jwtService, AuthenticationService authenticationService) {
+		this.jwtService = jwtService;
+		this.authenticationService = authenticationService;
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<JwtResponse> register(@RequestBody JwtRequest request) {
-		//if user doesn't exist
-		if(!userRepository.existsByUsername(request.getUsername())) {
-			User user = new User();
-			user.setUsername(request.getUsername());
-			user.setEmail(request.getEmail());
-			user.setPassword(passwordEncoder.encode(request.getPassword()));
-			user.setCreated_at(new Date());
+	public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+		User registeredUser = authenticationService.signup(registerUserDto);
 
-			this.userRepository.save(user);
-			return new ResponseEntity<>(HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-		}
+		return ResponseEntity.ok(registeredUser);
 	}
 
-	private void doAuthenticate(String email, String password) {
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+		User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
-		try {
-			manager.authenticate(authentication);
-		} catch (BadCredentialsException e) {
-			throw new BadCredentialsException(" Invalid Username or Password  !!");
-		}
+		String jwtToken = jwtService.generateToken(authenticatedUser);
 
+		LoginResponse loginResponse = new LoginResponse();
+		loginResponse.setToken(jwtToken);
+		loginResponse.setExpiresIn(jwtService.getExpirationTime());
+
+		return ResponseEntity.ok(loginResponse);
 	}
-
-	@ExceptionHandler(BadCredentialsException.class)
-	public String exceptionHandler() {
-		return "Credentials Invalid !!";
-	}
-
 }

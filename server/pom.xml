@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>battle-stats</artifactId>
-	<version>0.2.2</version>
+	<version>0.2.3</version>
 	<name>battle-stats</name>
 	<description>Server-side of battle stats</description>
 	<properties>

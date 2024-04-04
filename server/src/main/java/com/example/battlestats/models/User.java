@@ -1,39 +1,44 @@
 package com.example.battlestats.models;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
-import com.example.battlestats.services.JwtRequest;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
 @Setter
 @ToString
+@Table(name = "users")
 public class User implements UserDetails {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(nullable = false)
 	private Integer id;
 
+	@Column(nullable = false, unique = true, length = 100)
 	private String username;
-	private String password;
-	private String email;
 
-	private Date created_at;
+	@Column(nullable = false)
+	private String password;
+
+	@Column(nullable = false, updatable = false, name = "created_at")
+	@CreationTimestamp
+	private Date createdAt;
+
+	@Column(nullable = false, name = "updated_at")
+	@UpdateTimestamp
+	private Date updatedAt;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// For simplicity, assume all users have ROLE_USER authority
-		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+		return List.of();
 	}
 
 	@Override
