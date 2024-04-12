@@ -14,7 +14,6 @@ export default defineComponent({
 			isAPIFetching: Boolean(false),
 
 			username: undefined,
-			email: undefined,
 			password: undefined,
 			confirm_password: undefined,
 
@@ -32,26 +31,13 @@ export default defineComponent({
 				},
 			],
 
-			emailRules: [
-				(value: string) => {
-					if (value && value.length > 0) return true;
-					else return "Please enter an e-mail.";
-				},
-				(value: string) => {
-					let emailRegex = new RegExp(
-						/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-					);
-					if (emailRegex.test(value.toString())) return true;
-					else return "Please enter a valid email.";
-				},
-			],
-
 			passwordRules: [
 				(value: string) => {
 					if (value && value.length > 0) return true;
 					else return "Please enter a password.";
 				},
 			],
+
 			passwordConfirmRules: [
 				(value: string) => {
 					if (value && value.length > 0) return true;
@@ -69,16 +55,16 @@ export default defineComponent({
 			this.isAPIFetching = true;
 
 			axios
-				.post("http://localhost:8000/user/add", {
+				.post("http://localhost:8000/auth/register", {
 					username: this.username,
-					email: this.email,
 					password: this.password,
 				})
 				.then((r: AxiosResponse) => {
 					this.openSnackbar(r.data.message, true);
 				})
-				.catch((e) => {
-					this.openSnackbar(e.response.data.message, false);
+				.catch((e: AxiosError) => {
+					console.log(e);
+					this.openSnackbar("Unknown error.", false);
 				})
 				.finally(() => {
 					this.isAPIFetching = false;
@@ -110,13 +96,6 @@ export default defineComponent({
 				label="Username"
 				variant="outlined"
 				:rules="userRules"
-			/>
-
-			<v-text-field
-				v-model="email"
-				:rules="emailRules"
-				label="E-mail"
-				variant="outlined"
 			/>
 
 			<v-text-field

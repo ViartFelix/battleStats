@@ -1,6 +1,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import HeaderComp from "./components/HeaderComp.vue";
+import HeaderComp from "@/components/common/HeaderComp.vue";
+
+import { userStore } from "./store/profiles";
+import * as pinia from "pinia";
 
 export default defineComponent({
 	name: "App",
@@ -11,6 +14,14 @@ export default defineComponent({
 		return {
 			//
 		};
+	},
+	mounted(): void {
+		if (!this.rememberAuth()) {
+			alert("Can't login");
+		}
+	},
+	methods: {
+		...pinia.mapActions(userStore, ["rememberAuth"]),
 	},
 });
 </script>

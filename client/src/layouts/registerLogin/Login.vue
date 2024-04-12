@@ -1,12 +1,18 @@
 <script lang="ts">
-import profileStore from "@/store/profiles";
+import { userStore } from "@/store/profiles";
+import * as pinia from "pinia";
+
 import { Icon } from "@iconify/vue";
 import axios, { AxiosResponse } from "axios";
 import { defineComponent } from "vue";
+import { cookieCredidentials } from "@/store/storeTypes";
 
 export default defineComponent({
 	components: {
 		Icon,
+	},
+	computed: {
+		...pinia.mapState(userStore, ["token"]),
 	},
 	data() {
 		return {
@@ -15,6 +21,8 @@ export default defineComponent({
 
 			username: undefined,
 			password: undefined,
+
+			rememberMe: false,
 
 			isPasswordShown: false,
 
@@ -38,13 +46,21 @@ export default defineComponent({
 			this.isAPIContacting = true;
 
 			axios
-				.post("http://localhost:8000/user/login", {
+				.post("http://localhost:8000/auth/login", {
 					username: this.username,
 					password: this.password,
 				})
 				.then((r: AxiosResponse) => {
-					profileStore.commit("updateUser", r.data.user);
-					profileStore.commit("updateToken", r.data.token);
+					const data = r.data;
+
+					const credidentials: cookieCredidentials = {
+						username: this.username as unknown as string,
+						password: this.password as unknown as string,
+					};
+
+					this.storeLogin(data, this.rememberMe, credidentials);
+
+					this.$router.push({ path: "/", force: true });
 				})
 				.catch((e) => {
 					console.log(e);
@@ -53,6 +69,7 @@ export default defineComponent({
 					this.isAPIContacting = false;
 				});
 		},
+		...pinia.mapActions(userStore, ["storeLogin"]),
 	},
 });
 </script>
@@ -100,6 +117,12 @@ export default defineComponent({
 				>
 					Login
 				</v-btn>
+
+				<v-checkbox
+					class="remember-me-btn"
+					v-model="rememberMe"
+					label="Remember me ?"
+				></v-checkbox>
 			</p>
 		</v-form>
 
@@ -113,3 +136,5 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "../../scss/loginRegister/login.scss";
 </style>
+this.username as unknownthis.password as unknownthis.username as
+unknownthis.password as unknown

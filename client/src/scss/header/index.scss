@@ -82,12 +82,24 @@ header.header {
         width: 100%;
 
         &.auth {
+          display: flex;
+          align-items: center;
+
+          .logout-btn {
+            width: 1.5rem !important;
+            height: 1.5rem !important;
+            cursor: pointer;
+            user-select: none !important;
+          }
+
+         
+
           a.profile-link {
             width: fit-content;
             display: flex;
             align-items: center;
             margin-left: auto;
-            margin-right: 0;
+            margin-right: 1rem;
             direction: rtl;
   
             img.profile-img {

@@ -1,4 +1,7 @@
 <script lang="ts">
+import { userStore } from "@/store/profiles";
+import * as pinia from "pinia";
+
 import { defineComponent } from "vue";
 import { Icon } from "@iconify/vue";
 import router from "@/router";
@@ -14,6 +17,9 @@ export default defineComponent({
 			profileImg: "index.jpg",
 		};
 	},
+	computed: {
+		...pinia.mapState(userStore, ["details", "isLoggedIn"]),
+	},
 	methods: {
 		search() {
 			router.push({
@@ -21,6 +27,7 @@ export default defineComponent({
 				query: { query: this.searchTextModel },
 			});
 		},
+		...pinia.mapActions(userStore, ["doLogout"]),
 	},
 });
 </script>
@@ -59,7 +66,10 @@ export default defineComponent({
 						</v-list>
 					</v-menu>
 
-					<RouterLink class="my-teams-link" to="/slots"
+					<RouterLink
+						class="my-teams-link"
+						to="/slots"
+						v-if="isLoggedIn"
 						>My teams</RouterLink
 					>
 
@@ -79,7 +89,7 @@ export default defineComponent({
 					</div>
 				</div>
 
-				<div class="auth profile-container" v-if="false">
+				<div class="auth profile-container" v-if="isLoggedIn">
 					<RouterLink
 						class="profile-link internal-link"
 						to="/profile"
@@ -90,9 +100,15 @@ export default defineComponent({
 						/>
 						My profile
 					</RouterLink>
+					<Icon
+						@click="doLogout"
+						class="logout-btn"
+						color="red"
+						icon="material-symbols:logout"
+					/>
 				</div>
 
-				<div class="unAuth profile-container">
+				<div class="unAuth profile-container" v-else>
 					<RouterLink
 						class="register-link internal-link"
 						to="/register"
@@ -109,5 +125,5 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@import "../scss/header/index.scss";
+@import "@/scss/header/index.scss";
 </style>

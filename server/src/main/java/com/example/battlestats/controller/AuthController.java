@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
 	private final JwtService jwtService;
@@ -49,6 +50,7 @@ public class AuthController {
 		LoginResponse loginResponse = new LoginResponse();
 		loginResponse.setToken(jwtToken);
 		loginResponse.setExpiresIn(jwtService.getExpirationTime());
+		loginResponse.setUser(authenticatedUser);
 
 		return ResponseEntity.ok(loginResponse);
 	}
